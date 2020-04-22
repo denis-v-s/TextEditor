@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<BorderPane minHeight="600.0" minWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.HomeController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onNewClick" text="New" />
+                  <MenuItem mnemonicParsing="false" onAction="#onOpenClick" text="Open" />
+              <MenuItem mnemonicParsing="false" onAction="#onCloseClick" text="Close" />
+                  <MenuItem mnemonicParsing="false" onAction="#onSaveClick" text="Save" />
+                  <MenuItem mnemonicParsing="false" onAction="#onExitClick" text="Exit" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#onCopyClick" text="Copy" />
+                  <MenuItem mnemonicParsing="false" onAction="#onCutClick" text="Cut" />
+                  <MenuItem mnemonicParsing="false" onAction="#onDeleteClick" text="Delete" />
+                  <MenuItem mnemonicParsing="false" onAction="#onPasteClick" text="Paste" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="View">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#onWordCountClick" text="Word Count" />
+                  <MenuItem mnemonicParsing="false" onAction="#onSentenceCountClick" text="Sentence Count" />
+                  <MenuItem mnemonicParsing="false" onAction="#onFleschScoreClick" text="Flesch Score" />
+                  <MenuItem mnemonicParsing="false" onAction="#onCalculateAllClick" text="Calculate All" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Action">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onMarkovClick" text="Markov" />
+                  <MenuItem mnemonicParsing="false" onAction="#onTruncateClick" text="Truncate" />
+                  <MenuItem mnemonicParsing="false" onAction="#onShowClick" text="Show" />
+                  <MenuItem mnemonicParsing="false" onAction="#onPlotClick" text="Plot" />
+              </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <bottom>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="lblWordCount" text="words: 0">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="lblSentenceCount" text="sentences: 0">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="lblSyllabelCount" text="syllables: 0">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="lblFleschScore" text="flesch score: 0" />
+         </children>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </HBox>
+   </bottom>
+   <center>
+      <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextArea fx:id="txtTextArea" minHeight="200.0" minWidth="200.0" onKeyReleased="#refreshStatusBar" wrapText="true">
+               <contextMenu>
+                  <ContextMenu>
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#onCutClick" text="cut" />
+                        <MenuItem mnemonicParsing="false" onAction="#onCopyClick" text="copy" />
+                        <MenuItem mnemonicParsing="false" onAction="#onPasteClick" text="paste" />
+                        <MenuItem mnemonicParsing="false" onAction="#onDeleteClick" text="delete" />
+                    </items>
+                  </ContextMenu>
+               </contextMenu>
+            </TextArea>
+         </children>
+      </StackPane>
+   </center>
+</BorderPane>
