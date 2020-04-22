@@ -1,0 +1,19 @@
+Markov: When clicked, it will invoke an automatic text generator like
+the one you did in the last assignment. The text generator could be
+trained with any file of your choice but it will be trained with
+WarAndPeace.txt using linked lists as we did before. It should be able
+to generate a new text based on an initial word and a number specifying
+the length of the auto-generated text. The auto-generated text should
+be displayed in the main text area, and the initial word and the length
+should be provided by the user on a pop-up input dialog.
+Truncate: When clicked, your program will invoke a method of yours to
+truncate the file (War and Peace.txt)that is currently open in your text 
+area into 20 subfiles. Each of the subfiles will contain from 5% to 100%
+of the total number of words with an increment of 5% in each file. So
+the first file will contain 5%, the second file will contain 10%, the third
+file 15%, and so on, until 100% in the 20th file.
+Show: When clicked, the program will display the results.txt file as
+described below.
+Plot: When clicked, your program will display the performance graph as
+described below based on the 20 subfiles produced by the Truncate
+menu item.
