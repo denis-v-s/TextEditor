@@ -23,6 +23,7 @@ public class App extends Application {
 			Scene scene = new Scene(navigateToHome());
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
+			primaryStage.setTitle("Text Editor");
 			primaryStage.show();
 			this.primaryStage = primaryStage;
 		} catch(Exception e) {
