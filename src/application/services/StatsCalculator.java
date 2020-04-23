@@ -3,13 +3,42 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.*;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.scene.chart.XYChart.Data;
 
-public class StatsCalculator extends Task<HashMap<String, Double>> {
-  Path dir = Paths.get("").toAbsolutePath().resolve("outputData");
+public class StatsCalculator extends Task<StatsCalculator> {
+  private Path dir = Paths.get("").toAbsolutePath().resolve("outputData");
+  private ObservableList<Data<String, Double>> threeLoopTiming;
+  private ObservableList<Data<String, Double>> singleLoopTiming;
+    
+  public ObservableList<Data<String, Double>> getSingleLoopTiming() {
+    return this.singleLoopTiming;
+  }
   
-  public HashMap<String, Double> threeLoopAlgorithm() {        
-    LinkedHashMap<String, Double> singleLoopTiming = new LinkedHashMap<>();
+  public ObservableList<Data<String, Double>> getThreeLoopTiming() {
+    return this.threeLoopTiming;
+  }
+  
+  private void setSingleLoopTimingDataPoints(LinkedHashMap<String, Double> loopTiming) {
+    singleLoopTiming = FXCollections.observableList(new ArrayList<>());
+    
+    for (String key : loopTiming.keySet()) {
+      singleLoopTiming.add(new Data<>(key, loopTiming.get(key)));
+    }
+  }
+  private void setThreeLoopTimingDataPoints(LinkedHashMap<String, Double> loopTiming) {
+    threeLoopTiming = FXCollections.observableList(new ArrayList<>());
+    
+    for (String key : loopTiming.keySet()) {
+      threeLoopTiming.add(new Data<>(key, loopTiming.get(key)));
+    }
+    System.out.println();
+  }
+  
+  private void threeLoopAlgorithm() {        
+    LinkedHashMap<String, Double> loopTiming = new LinkedHashMap<>();
     
     for (int i = 1; i <= 20; i++) {
       String fileName = "file (" + i + ").txt";
@@ -32,20 +61,19 @@ public class StatsCalculator extends Task<HashMap<String, Double>> {
         double end = System.nanoTime();
         
         double runtime = getRunTimeInMilliSeconds(start, end);
-        singleLoopTiming.put(fileName, runtime);
+        loopTiming.put(fileName, runtime);
         super.updateProgress(i, 20);
-        //System.out.println(String.format("(Three loops) %s - words: %d, sentences: %d, syllables: %d", fileName, words, sentences, syllables));
       } 
       catch (IOException e) {
         e.printStackTrace();
       }
     }
-
-    return singleLoopTiming;
+    
+    this.setThreeLoopTimingDataPoints(loopTiming);
   }
   
-  public HashMap<String, Double> singleLoopAlgorithm() {
-    LinkedHashMap<String, Double> threeLoopTiming = new LinkedHashMap<>();
+  private void singleLoopAlgorithm() {
+    LinkedHashMap<String, Double> loopTiming = new LinkedHashMap<>();
     
     String fileName;
     String fullFileName;
@@ -125,14 +153,16 @@ public class StatsCalculator extends Task<HashMap<String, Double>> {
         double end = System.nanoTime();
         
         double runtime = getRunTimeInMilliSeconds(start, end);
-        threeLoopTiming.put(fileName, runtime);
+        loopTiming.put(fileName, runtime);
+        super.updateProgress(i, 20);
         //System.out.println(String.format("(Single loop) %s - words: %d, sentences: %d, syllables: %d", fileName, words, sentences, syllables));
       }
       catch (IOException e) {
         e.printStackTrace();
       }
     }
-    return threeLoopTiming;
+    
+    this.setSingleLoopTimingDataPoints(loopTiming);
   }
   
   //gets the difference, and converts to seconds
@@ -141,7 +171,9 @@ public class StatsCalculator extends Task<HashMap<String, Double>> {
   }
 
   @Override
-  protected HashMap<String, Double> call() throws Exception {
-    return threeLoopAlgorithm();
+  protected StatsCalculator call() throws Exception {
+    singleLoopAlgorithm();
+    threeLoopAlgorithm();
+    return this;
   }
 }

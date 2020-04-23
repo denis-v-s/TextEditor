@@ -26,6 +26,7 @@ public class HomeController implements Initializable {
   @FXML Label lblSentenceCount;
   @FXML Label lblSyllabelCount;
   @FXML Label lblFleschScore;
+  @FXML ProgressIndicator progress;
 
   private App context;
   private Path dir = Paths.get("").toAbsolutePath(); // project directory
@@ -152,16 +153,22 @@ public class HomeController implements Initializable {
   }
   
   public void onPlotClick() throws IOException {
-    final Stage stage = new Stage();
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/StatsView.fxml"));
-    loader.setControllerFactory(t -> new StatsViewController());
-    Parent root = loader.load();
+    Task<StatsCalculator> calculator = new StatsCalculator();
     
+    new Thread(new Runnable() {
+      public void run() {
+        calculator.run();
+      }
+    }).start();
+    
+    final Stage stage = new Stage();  
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/StatsView.fxml"));
+    loader.setControllerFactory(t -> new StatsViewController(calculator));
+    Parent root = loader.load();
     stage.setScene(new Scene(root));
-    stage.setResizable(false);
     stage.setTitle("Stats");
     stage.setAlwaysOnTop(true);
-    stage.show();        
+    stage.show();                        
   }
   
   public void onCalculateAllClick() {
