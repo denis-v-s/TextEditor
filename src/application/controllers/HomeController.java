@@ -10,6 +10,8 @@ import java.util.ResourceBundle;
 import application.App;
 import application.services.*;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
 import javafx.fxml.*;
 import javafx.scene.*;
@@ -24,9 +26,10 @@ public class HomeController implements Initializable {
   @FXML TextArea txtTextArea;
   @FXML Label lblWordCount;
   @FXML Label lblSentenceCount;
-  @FXML Label lblSyllabelCount;
+  @FXML Label lblSyllableCount;
   @FXML Label lblFleschScore;
   @FXML ProgressIndicator progress;
+  @FXML CheckMenuItem btnWordCount, btnSentenceCount, btnSyllableCount, btnFleschScore;
 
   private App context;
   private Path dir = Paths.get("").toAbsolutePath(); // project directory
@@ -171,20 +174,25 @@ public class HomeController implements Initializable {
     stage.show();                        
   }
   
-  public void onCalculateAllClick() {
-    refreshStatusBar();
-  }
-  
   public void onWordCountClick() {
-
+    //System.out.println(btnWordCount.isSelected());
+    btnWordCount.setSelected(btnWordCount.isSelected());
+    lblWordCount.setVisible(btnWordCount.isSelected());
   }
   
   public void onSentenceCountClick() {
-
+    btnSentenceCount.setSelected(btnSentenceCount.isSelected());
+    lblSentenceCount.setVisible(btnSentenceCount.isSelected());
+  }
+  
+  public void onSyllableCountClick() {
+    btnSyllableCount.setSelected(btnSyllableCount.isSelected());
+    lblSyllableCount.setVisible(btnSyllableCount.isSelected());
   }
   
   public void onFleschScoreClick() {
-
+    btnFleschScore.setSelected(btnFleschScore.isSelected());
+    lblFleschScore.setVisible(btnFleschScore.isSelected());
   }
   
   private void refreshWordCount() {
@@ -196,7 +204,7 @@ public class HomeController implements Initializable {
   }
   
   private void refreshSyllabelCount() {
-    lblSyllabelCount.setText("syllables: " + Utils.getSyllableCount(content.toString()));
+    lblSyllableCount.setText("syllables: " + Utils.getSyllableCount(content.toString()));
   }
   
   private void refreshFleschScore() {
@@ -217,7 +225,6 @@ public class HomeController implements Initializable {
     inputFile = dir.resolve("data").resolve("test.txt").toString();
     try {
       Files.readAllLines(Paths.get(inputFile)).forEach(line -> content.append(line + "\r\n"));
-      //txtTextArea.setText(fileContent.toString());
     } catch (Exception e) {
       System.out.println("error: " + e.getMessage());
     }
@@ -225,5 +232,4 @@ public class HomeController implements Initializable {
     txtTextArea.setText(content.toString());
     refreshStatusBar();
   }
-
 }

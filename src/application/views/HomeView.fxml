@@ -29,10 +29,10 @@
           </Menu>
           <Menu mnemonicParsing="false" text="View">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#onWordCountClick" text="Word Count" />
-                  <MenuItem mnemonicParsing="false" onAction="#onSentenceCountClick" text="Sentence Count" />
-                  <MenuItem mnemonicParsing="false" onAction="#onFleschScoreClick" text="Flesch Score" />
-                  <MenuItem mnemonicParsing="false" onAction="#onCalculateAllClick" text="Calculate All" />
+                  <CheckMenuItem fx:id="btnWordCount" mnemonicParsing="false" onAction="#onWordCountClick" selected="true" text="Word Count" />
+                  <CheckMenuItem fx:id="btnSentenceCount" mnemonicParsing="false" onAction="#onSentenceCountClick" selected="true" text="Sentence Count" />
+                  <CheckMenuItem fx:id="btnSyllableCount" mnemonicParsing="false" onAction="#onSyllableCountClick" selected="true" text="Syllable Count" />
+                  <CheckMenuItem fx:id="btnFleschScore" mnemonicParsing="false" onAction="#onFleschScoreClick" selected="true" text="Flesch Score" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Action">
@@ -59,7 +59,7 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </Label>
-            <Label fx:id="lblSyllabelCount" text="syllables: 0">
+            <Label fx:id="lblSyllableCount" text="syllables: 0">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>

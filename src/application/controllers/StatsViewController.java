@@ -99,6 +99,5 @@ public class StatsViewController implements Initializable {
     } catch (Exception e) {
         e.printStackTrace();
     }
-}
-
+  }
 }
